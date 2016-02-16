@@ -16,23 +16,12 @@
 
 package com.github.dnvriend.repository
 
-import javax.persistence.{ Entity, GenerationType, GeneratedValue, Id }
+import scala.annotation.meta.field
 
-import org.springframework.data.jpa.repository.JpaRepository
-
-import scala.beans.BeanProperty
-
-@Entity
-case class Account(
-    @BeanProperty username: String,
-    @BeanProperty password: String,
-    @ScalaJpaAnnotations.Id @ScalaJpaAnnotations.GeneratedValue(strategy = GenerationType.AUTO)@BeanProperty id: Long = 0L) {
-  // default constructor for JPA
-  def this() {
-    this(null, null, 0L)
-  }
-}
-
-trait AccountRepository extends JpaRepository[Account, String] {
-  def findByUsername(username: String): Account
+object ScalaJpaAnnotations {
+  type Id = javax.persistence.Id @field
+  type GeneratedValue = javax.persistence.GeneratedValue @field
+  type Temporal = javax.persistence.Temporal @field
+  type OneToOne = javax.persistence.OneToOne @field
+  type JoinColumn = javax.persistence.JoinColumn @field
 }

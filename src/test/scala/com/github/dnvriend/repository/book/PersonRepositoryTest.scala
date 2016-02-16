@@ -21,6 +21,7 @@ import com.github.dnvriend.repository.{ Address, Person, PersonRepository }
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import scala.collection.JavaConversions._
+import scala.reflect.runtime.universe._
 
 @ContextConfiguration(classes = Array[Class[_]](classOf[SpringConfiguration]))
 class PersonRepositoryTest extends TestSpec {
@@ -28,14 +29,10 @@ class PersonRepositoryTest extends TestSpec {
   @Autowired
   var repo: PersonRepository = null
 
-  val person: Person = {
-    val p = Person("foo", "bar", dateFromString("1980-01-01"))
-    p.address = Address("1000AA", "1")
-    p
-  }
+  val person: Person = Person("foo", "bar", dateFromString("1980-01-01"), Address("1000AA", "1"))
 
   def pfPerson: PartialFunction[Any, _] = {
-    case Person("foo", "bar", _) ⇒
+    case Person("foo", "bar", _, _, _) ⇒
   }
 
   it should "findByFirstNameIgnoreCase" in {
@@ -59,18 +56,20 @@ class PersonRepositoryTest extends TestSpec {
   }
 
   it should "findByAddressZipCode" in {
-    val p = repo.findByAddressZipCode("1000AA").head
+    val p = repo.findByAddressZipCode("1000AA", pageRequest).head
     p.address.zipCode shouldBe "1000AA"
   }
 
   it should "findByAddressHouseNumber" in {
-    val p = repo.findByAddressHouseNumber("1").head
+    val p = repo.findByAddressHouseNumber("1", pageRequest).head
     p.address.houseNumber shouldBe "1"
   }
 
   it should "" in {
-    val p = repo.findByAddressZipCodeAndAddressHouseNumber("1000AA", "1").head
-    p.address shouldBe Address("1000AA", "1")
+    val p = repo.findByAddressZipCodeAndAddressHouseNumber("1000AA", "1", pageRequest).head
+    p.address should matchPattern {
+      case Address("1000AA", "1", _) ⇒
+    }
   }
 
   override protected def beforeEach(): Unit = {
