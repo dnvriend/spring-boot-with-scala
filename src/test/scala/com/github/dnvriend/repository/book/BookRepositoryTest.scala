@@ -29,7 +29,7 @@ class BookRepositoryTest extends TestSpec {
   // so for some use cases, this can be great!
 
   @Autowired
-  var repo: BookRepository = null
+  val repo: BookRepository = null
 
   it should "save a book" in {
     val book = Book("foo", "bar")

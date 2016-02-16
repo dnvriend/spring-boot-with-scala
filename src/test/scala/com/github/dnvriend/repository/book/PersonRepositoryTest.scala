@@ -20,14 +20,14 @@ import com.github.dnvriend.SpringConfiguration
 import com.github.dnvriend.repository.{ Address, Person, PersonRepository }
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
+
 import scala.collection.JavaConversions._
-import scala.reflect.runtime.universe._
 
 @ContextConfiguration(classes = Array[Class[_]](classOf[SpringConfiguration]))
 class PersonRepositoryTest extends TestSpec {
 
   @Autowired
-  var repo: PersonRepository = null
+  val repo: PersonRepository = null
 
   val person: Person = Person("foo", "bar", dateFromString("1980-01-01"), Address("1000AA", "1"))
 
@@ -65,7 +65,7 @@ class PersonRepositoryTest extends TestSpec {
     p.address.houseNumber shouldBe "1"
   }
 
-  it should "" in {
+  it should "findByAddressZipCodeAndAddressHouseNumber" in {
     val p = repo.findByAddressZipCodeAndAddressHouseNumber("1000AA", "1", pageRequest).head
     p.address should matchPattern {
       case Address("1000AA", "1", _) ⇒
