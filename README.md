@@ -1,9 +1,10 @@
-# camel-spring-boot-test
-A small study project on how to use [camel-spring-boot](http://camel.apache.org/spring-boot.html), with Akka. 
+# spring-boot-with-scala
+A small study project on how to use [spring-boot](http://projects.spring.io/spring-boot/), with [Akka](http://akka.io/). 
 
 # TL;DR
-Spring can create actor instances, and even instantiate actors using the actor system. They can be used in a Controller
-for REST calls.
+[Spring](https://spring.io/) can create actor instances using the actor system. They can be used in the 
+[CountingController](https://github.com/dnvriend/spring-boot-with-scala/blob/spring-boot-akka/src/main/scala/com/github/dnvriend/controller/CountingController.scala)
+for handling REST calls and calling the Actor.
 
 Service | Status | Description
 ------- | ------ | -----------
