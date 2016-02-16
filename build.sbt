@@ -1,4 +1,4 @@
-name := "spring-boot-starter-data-jpa-scala"
+name := "spring-boot-starter-data-rest"
 
 organization := "com.github.dnvriend"
 
@@ -11,9 +11,13 @@ resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/maven-rel
 libraryDependencies ++= {
   val springBootVersion = "1.3.2.RELEASE"
   Seq(
+    "org.scala-lang.modules" % "scala-java8-compat_2.11" % "0.7.0",
     "ch.qos.logback" % "logback-classic" % "1.1.2",
+    "org.springframework.boot" % "spring-boot-starter-data-rest" % springBootVersion,
     "org.springframework.boot" % "spring-boot-starter-data-jpa" % springBootVersion,
     "org.springframework.boot" % "spring-boot-starter-logging" % springBootVersion,
+    "org.springframework.data" % "spring-data-rest-hal-browser" % "2.4.2.RELEASE",
+    "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
     "com.h2database" % "h2" % "1.4.191",
     "com.github.scalaspring" %% "scalatest-spring" % "0.2.1" % Test,
     "org.springframework.boot" % "spring-boot-starter-test" % springBootVersion % Test,
@@ -46,4 +50,13 @@ headers := Map(
   "conf" -> Apache2_0("2016", "Dennis Vriend", "#")
 )
 
-enablePlugins(AutomateHeaderPlugin)
+enablePlugins(AutomateHeaderPlugin, JavaAppPackaging)
+
+// native packager
+version in Docker := "latest"
+maintainer in Docker := "dnvriend@gmail.com"
+// use the 'java:8' docker base image
+dockerBaseImage := "java:8"
+// expose the HTTP port
+dockerExposedPorts := Seq(8080)
+dockerRepository := Option("dnvriend")

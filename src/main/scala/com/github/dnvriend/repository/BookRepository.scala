@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend.repository.book
+package com.github.dnvriend.repository
 
 import javax.persistence.{ Entity, GeneratedValue, GenerationType, Id }
 
 import org.springframework.data.jpa.repository.JpaRepository
 
+import scala.beans.BeanProperty
+
 @Entity
-case class Book(reader: String, isbn: String) {
-  // we need a default constructor
+case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) {
+  // default constructor for JPA
   def this() {
-    this("", "")
+    this(null, null)
   }
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  val id: Long = 0L
+  @BeanProperty
+  val bookId: Long = 0L
 }
 
 /**
