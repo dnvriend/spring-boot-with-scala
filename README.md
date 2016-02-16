@@ -44,7 +44,12 @@ The [user guide](http://docs.spring.io/spring-boot/docs/current/reference/htmlsi
 
 # Resources
 - [Springfox (Swagger) Reference Documentation](http://springfox.github.io/springfox/docs/snapshot/#introduction)
+- [Github - SpringFox Demos](https://github.com/springfox/springfox-demos/blob/master/spring-java-swagger/src/main/java/springfoxdemo/java/swagger/SpringConfig.java)
 - [Youtube - Spring Developer - Webinar: Documenting RESTful APIs](https://www.youtube.com/watch?v=knH5ihPNiUs)
 - [Youtube - Devvox - Johannes Fiala - Generate client stubs & document your REST-API using Swagger & Spring](https://www.youtube.com/watch?v=43GhBbP--oI)
+
+# Scala and annotations
+- [Spring Boot Reference](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-integration)
+- [Scala case classes and annotations](http://www.piotrbuda.me/2012/10/scala-case-classes-and-annotations-part-1.html)
 
 Have fun!
