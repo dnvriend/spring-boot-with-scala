@@ -1,4 +1,4 @@
-name := "camel-spring-boot-test"
+name := "spring-boot-hypermedia-web-service"
 
 organization := "com.github.dnvriend"
 
@@ -10,21 +10,11 @@ resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/maven-rel
 
 libraryDependencies ++= {
   val springBootVersion = "1.3.2.RELEASE"
-  val camelVersion = "2.16.2"
   Seq(
-    "org.scala-lang.modules" % "scala-java8-compat_2.11" % "0.7.0",
     "ch.qos.logback" % "logback-classic" % "1.1.2",
-    "org.apache.camel" % "camel-spring-boot" % camelVersion,
-    "org.apache.camel" % "camel-scala" % camelVersion,
-    "org.apache.activemq" % "activemq-camel" % "5.13.1",
-    "org.springframework" % "spring-jms" % "4.2.4.RELEASE",
-    "org.springframework.boot" % "spring-boot-starter-data-rest" % springBootVersion,
-    "org.springframework.boot" % "spring-boot-starter-security" % springBootVersion,
+    "org.springframework.boot" % "spring-boot-starter-hateoas" % springBootVersion,
     "org.springframework.boot" % "spring-boot-starter-data-jpa" % springBootVersion,
     "org.springframework.boot" % "spring-boot-starter-logging" % springBootVersion,
-    "org.springframework.boot" % "spring-boot-starter-actuator" % springBootVersion,
-    "org.springframework.data" % "spring-data-rest-hal-browser" % "2.4.2.RELEASE",
-    "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
     "com.h2database" % "h2" % "1.4.191",
     "com.github.scalaspring" %% "scalatest-spring" % "0.2.1" % Test,
     "org.springframework.boot" % "spring-boot-starter-test" % springBootVersion % Test,
@@ -57,13 +47,4 @@ headers := Map(
   "conf" -> Apache2_0("2016", "Dennis Vriend", "#")
 )
 
-enablePlugins(AutomateHeaderPlugin, JavaAppPackaging)
-
-// native packager
-version in Docker := "latest"
-maintainer in Docker := "dnvriend@gmail.com"
-// use the 'java:8' docker base image
-dockerBaseImage := "java:8"
-// expose the HTTP port
-dockerExposedPorts := Seq(8080)
-dockerRepository := Option("dnvriend")
+enablePlugins(AutomateHeaderPlugin)

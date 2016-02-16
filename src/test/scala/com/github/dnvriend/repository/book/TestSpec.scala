@@ -16,22 +16,14 @@
 
 package com.github.dnvriend.repository.book
 
-import java.text.SimpleDateFormat
-
 import com.github.scalaspring.scalatest.TestContextManagement
-import org.scalatest.{ OptionValues, FlatSpec, Matchers, BeforeAndAfterEach }
+import org.scalatest.{FlatSpec, Matchers, BeforeAndAfterEach}
 import org.scalatest.concurrent.ScalaFutures
-import org.springframework.data.domain.PageRequest
 
 import scala.concurrent.Future
 import scala.util.Try
 
-trait TestSpec extends FlatSpec with Matchers with ScalaFutures with TestContextManagement with BeforeAndAfterEach with OptionValues {
-
-  val pageRequest = new PageRequest(0, 100)
-
-  def dateFromString(dateStr: String): java.util.Date =
-    new SimpleDateFormat("yyyy-MM-dd").parse(dateStr)
+trait TestSpec extends FlatSpec with Matchers with ScalaFutures with TestContextManagement with BeforeAndAfterEach {
 
   implicit class PimpedByteArray(self: Array[Byte]) {
     def getString: String = new String(self)

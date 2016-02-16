@@ -16,36 +16,23 @@
 
 package com.github.dnvriend.controller
 
-import org.apache.camel.ProducerTemplate
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.{ RequestMapping, RequestMethod, RequestParam, RestController }
+import java.util.concurrent.atomic.AtomicLong
 
-import scala.beans.BeanProperty
-
-case class Greeting(@BeanProperty message: String)
+import com.github.dnvriend.json.Greeting
+import org.springframework.hateoas.mvc.ControllerLinkBuilder._
+import org.springframework.http.HttpEntity
+import org.springframework.web.bind.annotation._
 
 @RestController
-@RequestMapping(path = Array("/api/greeting"))
-class GreetingController {
+@RequestMapping(path = Array("/greeting"))
+class GreetingController extends ControllerOps {
 
-  @Autowired
-  val producerTemplate: ProducerTemplate = null
+  val counter: AtomicLong = new AtomicLong()
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def greeting(@RequestParam(value = "name", defaultValue = "World") name: String): Greeting =
-    Greeting(s"Hello $name")
-
-  @RequestMapping(path = Array("/camel/direct"), method = Array(RequestMethod.GET))
-  def camelDirect(@RequestParam(value = "name", defaultValue = "World") name: String): Greeting =
-    producerTemplate.requestBody("direct:helloworld", name) match {
-      case msg: String ⇒ Greeting(msg)
-      case e           ⇒ Greeting("Unknown type: " + e.getClass.getName)
-    }
-
-  @RequestMapping(path = Array("/camel/activemq"), method = Array(RequestMethod.GET))
-  def camelActiveMQ(@RequestParam(value = "name", defaultValue = "World") name: String): Greeting =
-    producerTemplate.requestBody("activemq:helloworld", name) match {
-      case msg: String ⇒ Greeting(msg)
-      case e           ⇒ Greeting("Unknown type: " + e.getClass.getName)
-    }
+  def greeting(@RequestParam(value = "name", defaultValue = "World") name: String): HttpEntity[Greeting] = {
+    val greeting = Greeting(s"Hello $name")
+    greeting.add(linkTo(methodOn(classOf[GreetingController]).greeting(name)).withSelfRel())
+    found(greeting)
+  }
 }

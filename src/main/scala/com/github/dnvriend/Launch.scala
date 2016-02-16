@@ -16,41 +16,11 @@
 
 package com.github.dnvriend
 
-import javax.jms.ConnectionFactory
-
-import org.apache.activemq.ActiveMQConnectionFactory
-import org.apache.activemq.camel.component.ActiveMQComponent
-import org.apache.camel.CamelContext
-import org.apache.camel.component.jms.JmsConfiguration
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.context.annotation.Bean
 
-/**
- * see: http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-java
- */
 @SpringBootApplication
-class SpringConfiguration {
-
-  @Bean
-  def activemq(context: CamelContext): ActiveMQComponent = {
-    val component = context.getComponent("activemq").asInstanceOf[ActiveMQComponent]
-    component.setConfiguration(jmsConfiguration)
-    component.setTransacted(true)
-    component
-  }
-
-  @Bean
-  def connectionFactory: ConnectionFactory =
-    new ActiveMQConnectionFactory("admin", "adminactivemq", "nio://boot2docker:61616")
-
-  @Bean
-  def jmsConfiguration: JmsConfiguration = {
-    val jmsConfiguration: JmsConfiguration = new JmsConfiguration()
-    jmsConfiguration.setConnectionFactory(connectionFactory)
-    jmsConfiguration
-  }
-}
+class SpringConfiguration
 
 object Launch extends App {
   SpringApplication.run(classOf[SpringConfiguration], args: _*) // bootstrap the application

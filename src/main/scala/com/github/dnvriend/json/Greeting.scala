@@ -14,27 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend.repository
+package com.github.dnvriend.json
 
-import javax.persistence.{ Entity, GenerationType, GeneratedValue, Id }
-
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.hateoas.ResourceSupport
 
 import scala.beans.BeanProperty
 
-@Entity
-case class Account(@BeanProperty username: String, @BeanProperty password: String) {
-  // default constructor for JPA
-  def this() {
-    this(null, null)
-  }
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty
-  val id: Long = 0L
-}
-
-trait AccountRepository extends JpaRepository[Account, String] {
-  def findByUsername(username: String): Account
-}
+case class Greeting(@BeanProperty content: String) extends ResourceSupport

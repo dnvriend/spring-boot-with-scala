@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend.repository
+package com.github.dnvriend.repository.book
 
 import javax.persistence.{ Entity, GeneratedValue, GenerationType, Id }
 
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.repository.query.Param
+import org.springframework.hateoas.ResourceSupport
 
 import scala.beans.BeanProperty
 
 @Entity
-case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) {
-  // default constructor for JPA
+case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) extends ResourceSupport {
+  // we need a default constructor
   def this() {
     this(null, null)
   }
@@ -34,7 +33,10 @@ case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @BeanProperty
-  val id: Long = 0L
+  val bookId: Long = 0L
+
+  override def toString: String =
+    s"Book($bookId,$reader,$isbn)"
 }
 
 /**
@@ -42,9 +44,6 @@ case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) {
  * so much for free, so for some use cases, this could be great!
  */
 trait BookRepository extends JpaRepository[Book, java.lang.Long] {
-  type Books = java.util.List[Book]
-
-  def findByReaderIgnoreCase(@Param("reader") reader: String, pageable: Pageable): Books
-  def findByIsbnIgnoreCase(@Param("isbn") isbn: String, pageable: Pageable): Books
+  def findByReader(reader: String): java.util.List[Book]
 }
 

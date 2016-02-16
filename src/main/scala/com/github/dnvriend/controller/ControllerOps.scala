@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend.routes
+package com.github.dnvriend.controller
 
-import org.apache.camel.scala.dsl.builder.RouteBuilder
-import org.springframework.stereotype.Component
+import org.springframework.http.{ HttpStatus, ResponseEntity }
 
-@Component
-class HelloWorldRoute extends RouteBuilder {
-  "direct:helloworld" routeId "helloworld-direct" transform (ex ⇒ "Hello " + ex.in) log "HelloWorld" to "log:com.github.dnvriend?showAll=true"
-  "activemq:queue:helloworld" routeId "helloworld-activemq" transform (ex ⇒ "Hello " + ex.in) log "HelloWorld" to "log:com.github.dnvriend?showAll=true"
+trait ControllerOps {
+  def notFound[A] = new ResponseEntity[A](HttpStatus.NOT_FOUND)
+  def found[A](a: A) = new ResponseEntity[A](a, HttpStatus.OK)
+  def noContent[A] = new ResponseEntity[A](HttpStatus.NO_CONTENT)
 }
