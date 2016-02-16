@@ -7,20 +7,45 @@ IntelliJ IDEA has spring-boot support. You should enable the Spring Boot plugin 
 the Application Context and Configuration files to the facet. Please view the following video for more information: [Youtube - Spring Developer - Spring Boot is made for tooling](https://www.youtube.com/watch?v=IHZ0d3MBb0g)
 
 # Videos
+## Spring Boot
 - [Youtube - Spring Developer - Webinar: Spring Boot -- Simplifying Spring for Everyone](https://www.youtube.com/watch?v=D6nJSyWB-xA)
 - [Youtube - Spring Developer - Spring Boot is made for tooling](https://www.youtube.com/watch?v=IHZ0d3MBb0g)
+
+## Sprint REST
 - [Youtube - Spring Developer - Documenting RESTful APIs](https://www.youtube.com/watch?v=k5ncCJBarRI)
 - [Youtube - Spring Developer - Spring Data REST - Data Meets Hypermedia + Security](https://www.youtube.com/watch?v=s9Cd3-0gYKA)
 - [Youtube - Spring Developer - The State of Securing RESTful APIs with Spring](https://www.youtube.com/watch?v=o4nt9IR8iL8)
+
+## Reactive Programming
 - [Youtube - Spring Developer - Introduction to Reactive Programming](https://www.youtube.com/watch?v=fec9nEIybp0)
 - [Youtube - Spring Developer - Introducing RxJava into a Spring Boot REST API](https://www.youtube.com/watch?v=QOR69q1e63Y)
+
+## Search
 - [Youtube - Spring Developer - Boot your search with Spring](https://www.youtube.com/watch?v=rf3aQRYxLBs)
+
+## Integration
+- [Spring Integration - Streams](http://docs.spring.io/spring-integration/docs/4.2.4.RELEASE/reference/html/stream.html)
+- [Youtube - Spring Developer - Webinar: Spring Integration 4.0 - The New Frontier](https://www.youtube.com/watch?v=g3DgdSqEgzI)
+
+## Spring XD (eXtreme Data) / Streams
+[Spring XD](http://docs.spring.io/spring-xd/docs/1.3.0.RELEASE/reference/html/) (eXtreme Data) is a runtime environment for Big Data applications.  
 - [Youtube - Spring Developer - Spring XD - A Guided Tour](https://www.youtube.com/watch?v=lteee9N816k)
 - [Youtube - Spring Developer - Spring XD today and tomorrow](https://www.youtube.com/watch?v=NIBYST0z3sg)
 - [Youtube - Spring Developer - Reactive data-pipelines with Spring XD and Kafka](https://www.youtube.com/watch?v=nP7Cx4yeZU4)
 - [Youtube - Spring Developer - Stream Processing at Scale with Spring XD and Kafka](https://www.youtube.com/watch?v=OZCQ52H0Kks)
-- [Youtube - Spring Developer - Webinar: Spring Integration 4.0 - The New Frontier](https://www.youtube.com/watch?v=g3DgdSqEgzI)
+
+## Testing
 - [Youtube - Spring Developer - Get the Most out of Testing with Spring 4.2](https://www.youtube.com/watch?v=enDXm12nVPc)
+
+## Kafka
+- [Martin Kleppmann - Building real-time data products at LinkedIn with Apache Samza](https://www.youtube.com/watch?v=yO3SBU6vVKA)
+- [Jay Kreps - Stream Processing with Apache Kafka](https://www.youtube.com/watch?v=Z9UrIm2Nc7s)
+- [Jay Kreps - Apache Kafka and the Next 700 Stream Processing Systems](https://www.youtube.com/watch?v=9RMOc0SwRro)
+- [Jay Kreps - I Love Logs: Apache Kafka and Real-Time Data Integration](https://www.youtube.com/watch?v=aJuo_bLSW6s)
+- [Jay Kreps - Putting Apache Kafka to Use for Event Streams](https://www.youtube.com/watch?v=el-SqcZLZlI)
+- [Joe Stein - Introduction to Apache Kafka](https://www.youtube.com/watch?v=qc33qMUvR7c)
+- [Cody Koeninger - Exactly Once Streaming from Kafka](https://www.youtube.com/watch?v=fXnNEq1v3VA)
+
 
 # Spring boot starter poms
 Starter POMs (libraries) are a set of convenient dependency descriptors that you can include in your `build.sbt`. 
