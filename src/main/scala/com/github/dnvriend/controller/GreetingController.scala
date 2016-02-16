@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend.repository.book
+package com.github.dnvriend.controller
 
-import com.github.scalaspring.scalatest.TestContextManagement
-import org.scalatest.{FlatSpec, Matchers, BeforeAndAfterEach}
-import org.scalatest.concurrent.ScalaFutures
+import java.util.concurrent.atomic.AtomicLong
 
-import scala.concurrent.Future
-import scala.util.Try
+import com.github.dnvriend.json.Greeting
+import org.springframework.web.bind.annotation._
 
-trait TestSpec extends FlatSpec with Matchers with ScalaFutures with TestContextManagement with BeforeAndAfterEach {
+@RestController
+class GreetingController {
 
-  implicit class PimpedByteArray(self: Array[Byte]) {
-    def getString: String = new String(self)
-  }
+  val counter: AtomicLong = new AtomicLong()
 
-  implicit class PimpedFuture[T](self: Future[T]) {
-    def toTry: Try[T] = Try(self.futureValue)
-  }
+  @RequestMapping(path = Array("/greeting"), method = Array(RequestMethod.GET))
+  def greeting(@RequestParam(value = "name", defaultValue = "World") name: String): Greeting =
+    Greeting(counter.incrementAndGet(), s"Hello $name")
 }

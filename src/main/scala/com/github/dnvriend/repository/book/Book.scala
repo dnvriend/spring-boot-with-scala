@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend.repository
+package com.github.dnvriend.repository.book
 
 import javax.persistence.{ Entity, GeneratedValue, GenerationType, Id }
 
@@ -24,7 +24,7 @@ import scala.beans.BeanProperty
 
 @Entity
 case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) {
-  // default constructor for JPA
+  // we need a default constructor
   def this() {
     this(null, null)
   }
@@ -32,7 +32,10 @@ case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @BeanProperty
-  val bookId: Long = 0L
+  val id: Long = 0L
+
+  override def toString: String =
+    s"Book($id,$reader,$isbn)"
 }
 
 /**

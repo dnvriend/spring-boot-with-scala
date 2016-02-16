@@ -17,7 +17,6 @@
 package com.github.dnvriend.repository.book
 
 import com.github.dnvriend.SpringConfiguration
-import com.github.dnvriend.repository.{ Book, BookRepository }
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import scala.collection.JavaConversions._
@@ -29,30 +28,30 @@ class BookRepositoryTest extends TestSpec {
   // so for some use cases, this can be great!
 
   @Autowired
-  var repo: BookRepository = null
+  var bookRepository: BookRepository = null
 
   it should "save a book" in {
     val book = Book("foo", "bar")
-    val id = repo.save(book).bookId
-    repo.findOne(id) shouldBe book
+    val id = bookRepository.save(book).id
+    bookRepository.findOne(id) shouldBe book
   }
 
   it should "save a number of entities" in {
     val xs = (1 to 10).map(i ⇒ Book(i.toString, i.toString))
-    repo.save(xs)
-    repo.count() shouldBe 10
+    bookRepository.save(xs)
+    bookRepository.count() shouldBe 10
   }
 
   it should "find by reader" in {
     val xs = (1 to 10).map(i ⇒ Book("foo", i.toString))
     val xy = (1 to 20).map(i ⇒ Book("bar", i.toString))
-    repo.save(xs ++ xy)
-    repo.count() shouldBe 30
-    repo.findByReader("foo").size shouldBe 10
-    repo.findByReader("bar").size shouldBe 20
+    bookRepository.save(xs ++ xy)
+    bookRepository.count() shouldBe 30
+    bookRepository.findByReader("foo").size shouldBe 10
+    bookRepository.findByReader("bar").size shouldBe 20
   }
 
   override protected def beforeEach(): Unit = {
-    repo.deleteAll()
+    bookRepository.deleteAll()
   }
 }
