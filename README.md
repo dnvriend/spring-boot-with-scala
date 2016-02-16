@@ -1,101 +1,26 @@
 # camel-spring-boot-test
-A small study project on how to use [camel-spring-boot](http://camel.apache.org/spring-boot.html), register a camel route
-that uses the [Camel Scala DSL](http://camel.apache.org/scala-dsl.html) to define the route.
+A small study project on how to use [camel-spring-boot](http://camel.apache.org/spring-boot.html) with Scala and Akka. 
+It focusses on several spring boot starter poms and application types. It uses branches for the separate project types.
 
-# TL;DR
-Spring Boot component provide auto-configuration for the Apache Camel. It auto-configures the Camel context and auto-detects 
-Camel routes available in the Spring context and registers the key Camel utilities 
-(like producer template, consumer template and the type converter) as beans.  
+# IntelliJ IDEA support
+IntelliJ IDEA has spring-boot support. You should enable the Spring Boot plugin and add a spring project facet and add
+the Application Context and Configuration files to the facet. Please view the following video for more information: [Youtube - Spring Developer - Spring Boot is made for tooling](https://www.youtube.com/watch?v=IHZ0d3MBb0g)
 
-Service | Status | Description
-------- | ------ | -----------
-License | [![License](http://img.shields.io/:license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt) | Apache 2.0
-
-# Calling the web service
-Service | Verb | [httpie](https://github.com/jkbrzt/httpie) | Description
---------|------|--------|-------------
-greeting | GET | http localhost:8080/api/greeting name==dennis | Returns a greeting
-greeting/camel | GET | http -a foo:bar localhost:8080/api/greeting/camel/direct name==dennis | Uses a camel route to transform the body, returns the transformed body.
-greeting/camel | GET | http -a foo:bar localhost:8080/api/greeting/camel/activemq name==dennis | Uses a camel route to transform the body, returns the transformed body.
-books    | GET  | http -a foo:bar get localhost:8080/api/books | Get a list of books
-books    | POST | http -a foo:bar post localhost:8080/api/books reader=foo isbn=bar id=0 | Create a book
-books/{id} | GET | http -a foo:bar get localhost:8080/api/books/1 | Get a book by id
-books/{id}| DELETE | http -a foo:bar delete localhost:8080/books/1 | Delete a book by id
-books | DELETE | http -a foo:bar delete localhost:8080/api/books | Delete all books
-people | POST |  http -a foo:bar post localhost:8080/api/people firstName=Dennis lastName=Vriend birthDate=1974-11-01 address:='{"zipCode":"1000AA","houseNumber":"33"}' | Create a person
-people/search | GET | http -a foo:bar localhost:8080/api/people/search/findByLastNameIgnoreCase lastName==dennis | search for people 
-people/search | GET | http -a foo:bar localhost:8080/api/people/search/findByFirstNameIgnoreCase firstName==dennis | search for people
-people/search | GET | http -a foo:bar localhost:8080/api/people/search/findByFirstNameOrLastName firstName==dennis lastName==vriend | search for people
-
-# Security
-The web service is secured with Basic Authentication. The credentials are:
-
-- username: foo
-- password: bar
-
-# The HAL browser
-[Hypertext Application Language](http://stateless.co/hal_specification.html) or HAL is a simple format that gives a 
-consistent and easy way to hyperlink between resources in your API. The HAL browser (a webapp) is available at http://localhost:8080/api.
-The HAL browser can be used use it to navigate the app and create new resources. For more information read the [HAL browser paragraph
-from the spring data rest reference documentation](http://docs.spring.io/spring-data/rest/docs/2.4.2.RELEASE/reference/html/#_the_hal_browser).
-
-# Spring Actuator
-[Spring Boot Actuator](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-actuator) includes a number of additional 
-features to help you monitor and manage your application when it’s pushed to production. You can choose to manage and monitor your 
-application using HTTP endpoints. Auditing, health and metrics gathering can be automatically applied to your application. 
-The [user guide](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready) covers the features in more detail.
-
-# Resources
-- [Spring Boot Reference](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
-- [Spring Boot Actuator Reference](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready)
-- [Spring Data REST Reference](http://docs.spring.io/spring-data/rest/docs/2.4.2.RELEASE/reference/html/)
-- [Spring JPA](http://docs.spring.io/spring-data/jpa/docs/1.9.2.RELEASE/reference/html/)
-- [Camel Spring Boot](http://camel.apache.org/spring-boot.html)
-- [Securing REST APIs With Spring Boot](http://ryanjbaxter.com/2015/01/06/securing-rest-apis-with-spring-boot/)
-- [Common application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
-
-# Spring annotations
-- __@SpringBootApplication:__ Indicates a `Configuration` class that declares one or more `@Bean` methods and also triggers 
-`@EnableAutoConfiguration` and `@ComponentScan`. This is a convenience annotation that is equivalent to declaring @Configuration,
-@EnableAutoConfiguration and @ComponentScan.
-- __@Component:__  Indicates that an annotated class is a `component`. Such classes are considered as candidates for auto-detection 
-when using annotation-based configuration and classpath scanning.
-- __@Repository:__ specialization of `@Component`, Indicates that an annotated class is a `Repository`, originally defined by
-Domain-Driven Design (Evans, 2003) as `a mechanism for encapsulating storage, retrieval, and search behavior which emulates a collection of objects`.
-Teams implementing traditional [J2EE patterns](http://corej2eepatterns.com/index.htm) such as `Data Access Object` may also apply this stereotype to DAO classes, though care should be taken to
-understand the distinction between Data Access Object and DDD-style repositories before doing so. This annotation is a general-purpose stereotype and 
-individual teams may narrow their semantics and use as appropriate.
-- __@Service:__ specialization of `@Component`, Indicates that an annotated class is a `Service`, originally defined by Domain-Driven
-Design (Evans, 2003) as `an operation offered as an interface that stands alone in the model, with no encapsulated state.`
-May also indicate that a class is a `Business Service Facade` (in the Core J2EE patterns sense), or something similar. 
-- __@Controller:__ specialization of @Component, Indicates that an annotated class is a `Controller` (e.g. a web controller).
-This annotation allows for implementation classes to be autodetected through classpath scanning. It is typically used in combination 
-with annotated handler methods based on the `RequestMapping` annotation.
-
-# Camel bean integration
-Camel supports the integration of beans and POJOs. For more information: [Camel Bean Integration Reference](http://camel.apache.org/bean-integration.html).
-
-- __@EndpointInject:__ To inject an endpoint, see more details at [POJO Producing](http://camel.apache.org/pojo-producing.html).
-- __@BeanInject:__ To inject a bean obtained from the Registry. See [Bean Injection](http://camel.apache.org/bean-injection.html).
-- __@PropertyInject:__ To inject a value using property placeholder.
-- __@Produce:__ To inject a producer to send message to an endpoint. See [POJO Producing](http://camel.apache.org/pojo-producing.html).
-- __@Consume:__ To inject a consumer on a method. See [POJO Consuming](http://camel.apache.org/pojo-consuming.html).
-             
-# JPA Template Query creation
-Generally the query creation mechanism for JPA works as described in [Query](http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods) methods. 
-Here’s a short example of what a JPA query method translates into:
-
-```scala
-trait UserRepository extends Repository[User, java.lang.Long] {
-  def findByEmailAddressAndLastname(String emailAddress, String lastname): java.util.List[User]
-}
-```
-
-We will create a query using the JPA criteria API from this but essentially this translates into the following query: 
-
-```sql
-select u from User u where u.emailAddress = ?1 and u.lastname = ?2
-```
+# Videos
+- [Youtube - Spring Developer - Webinar: Spring Boot -- Simplifying Spring for Everyone](https://www.youtube.com/watch?v=D6nJSyWB-xA)
+- [Youtube - Spring Developer - Spring Boot is made for tooling](https://www.youtube.com/watch?v=IHZ0d3MBb0g)
+- [Youtube - Spring Developer - Documenting RESTful APIs](https://www.youtube.com/watch?v=k5ncCJBarRI)
+- [Youtube - Spring Developer - Spring Data REST - Data Meets Hypermedia + Security](https://www.youtube.com/watch?v=s9Cd3-0gYKA)
+- [Youtube - Spring Developer - The State of Securing RESTful APIs with Spring](https://www.youtube.com/watch?v=o4nt9IR8iL8)
+- [Youtube - Spring Developer - Introduction to Reactive Programming](https://www.youtube.com/watch?v=fec9nEIybp0)
+- [Youtube - Spring Developer - Introducing RxJava into a Spring Boot REST API](https://www.youtube.com/watch?v=QOR69q1e63Y)
+- [Youtube - Spring Developer - Boot your search with Spring](https://www.youtube.com/watch?v=rf3aQRYxLBs)
+- [Youtube - Spring Developer - Spring XD - A Guided Tour](https://www.youtube.com/watch?v=lteee9N816k)
+- [Youtube - Spring Developer - Spring XD today and tomorrow](https://www.youtube.com/watch?v=NIBYST0z3sg)
+- [Youtube - Spring Developer - Reactive data-pipelines with Spring XD and Kafka](https://www.youtube.com/watch?v=nP7Cx4yeZU4)
+- [Youtube - Spring Developer - Stream Processing at Scale with Spring XD and Kafka](https://www.youtube.com/watch?v=OZCQ52H0Kks)
+- [Youtube - Spring Developer - Webinar: Spring Integration 4.0 - The New Frontier](https://www.youtube.com/watch?v=g3DgdSqEgzI)
+- [Youtube - Spring Developer - Get the Most out of Testing with Spring 4.2](https://www.youtube.com/watch?v=enDXm12nVPc)
 
 # Spring boot starter poms
 Starter POMs (libraries) are a set of convenient dependency descriptors that you can include in your `build.sbt`. 
