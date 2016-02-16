@@ -1,11 +1,6 @@
 # camel-spring-boot-test
-A small study project on how to use [camel-spring-boot](http://camel.apache.org/spring-boot.html), register a camel route
-that uses the [Camel Scala DSL](http://camel.apache.org/scala-dsl.html) to define the route.
-
-# TL;DR
-Spring Boot component provide auto-configuration for the Apache Camel. It auto-configures the Camel context and auto-detects 
-Camel routes available in the Spring context and registers the key Camel utilities 
-(like producer template, consumer template and the type converter) as beans.  
+A small study project on how to use [camel-spring-boot](http://camel.apache.org/spring-boot.html). How to enable and 
+configure Swagger for the Greeting service
 
 Service | Status | Description
 ------- | ------ | -----------
@@ -14,7 +9,9 @@ License | [![License](http://img.shields.io/:license-Apache%202-red.svg)](http:/
 # Calling the web service
 Service | Verb | [httpie](https://github.com/jkbrzt/httpie) | Description
 --------|------|--------|-------------
-greeting | GET | http localhost:8080/api/greeting name==dennis | Returns a greeting
+swagger-ui | GET | http://localhost:8080/swagger-ui.html | Swagger UI: Credentials for the UI are: foo:bar 
+swagger greeting | GET | http -a foo:bar localhost:8080/v2/api-docs/?group=greetings | get swagger doc for the greeting service
+greeting | GET | http -a foo:bar localhost:8080/api/greeting name==dennis | Returns a greeting
 greeting/camel | GET | http -a foo:bar localhost:8080/api/greeting/camel/direct name==dennis | Uses a camel route to transform the body, returns the transformed body.
 greeting/camel | GET | http -a foo:bar localhost:8080/api/greeting/camel/activemq name==dennis | Uses a camel route to transform the body, returns the transformed body.
 books    | GET  | http -a foo:bar get localhost:8080/api/books | Get a list of books

@@ -23,6 +23,8 @@ libraryDependencies ++= {
     "org.springframework.boot" % "spring-boot-starter-data-jpa" % springBootVersion,
     "org.springframework.boot" % "spring-boot-starter-logging" % springBootVersion,
     "org.springframework.boot" % "spring-boot-starter-actuator" % springBootVersion,
+    "io.springfox" % "springfox-swagger-ui" % "2.3.1",
+    "io.springfox" % "springfox-swagger2" % "2.3.1",
     "org.springframework.data" % "spring-data-rest-hal-browser" % "2.4.2.RELEASE",
     "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
     "com.h2database" % "h2" % "1.4.191",

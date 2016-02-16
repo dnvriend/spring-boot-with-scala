@@ -16,8 +16,10 @@
 
 package com.github.dnvriend.controller
 
+import io.swagger.annotations.{ ApiOperation, ApiImplicitParams, ApiImplicitParam, ApiResponses, ApiResponse }
 import org.apache.camel.ProducerTemplate
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.{ RequestMapping, RequestMethod, RequestParam, RestController }
 
 import scala.beans.BeanProperty
@@ -31,18 +33,51 @@ class GreetingController {
   @Autowired
   val producerTemplate: ProducerTemplate = null
 
-  @RequestMapping(method = Array(RequestMethod.GET))
+  @ApiOperation(value = "getGreeting", nickname = "getGreeting")
+  @ApiImplicitParams(value = Array(
+    new ApiImplicitParam(name = "name", value = "User's name", required = false, dataType = "string", paramType = "query", defaultValue = "World")
+  ))
+  @ApiResponses(value = Array(
+    new ApiResponse(code = 200, message = "Success", response = classOf[Greeting]),
+    new ApiResponse(code = 401, message = "Unauthorized"),
+    new ApiResponse(code = 403, message = "Forbidden"),
+    new ApiResponse(code = 404, message = "Not Found"),
+    new ApiResponse(code = 500, message = "Failure")
+  ))
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array(MediaType.APPLICATION_JSON_VALUE))
   def greeting(@RequestParam(value = "name", defaultValue = "World") name: String): Greeting =
     Greeting(s"Hello $name")
 
-  @RequestMapping(path = Array("/camel/direct"), method = Array(RequestMethod.GET))
+  @ApiImplicitParams(value = Array(
+    new ApiImplicitParam(name = "name", value = "User's name", required = false, dataType = "string", paramType = "query", defaultValue = "World")
+  ))
+  @ApiResponses(value = Array(
+    new ApiResponse(code = 200, message = "Success", response = classOf[Greeting]),
+    new ApiResponse(code = 401, message = "Unauthorized"),
+    new ApiResponse(code = 403, message = "Forbidden"),
+    new ApiResponse(code = 404, message = "Not Found"),
+    new ApiResponse(code = 500, message = "Failure")
+  ))
+  @ApiOperation(value = "getCamelDirectGreeting", nickname = "getCamelDirectGreeting")
+  @RequestMapping(path = Array("/camel/direct"), method = Array(RequestMethod.GET), produces = Array(MediaType.APPLICATION_JSON_VALUE))
   def camelDirect(@RequestParam(value = "name", defaultValue = "World") name: String): Greeting =
     producerTemplate.requestBody("direct:helloworld", name) match {
       case msg: String ⇒ Greeting(msg)
       case e           ⇒ Greeting("Unknown type: " + e.getClass.getName)
     }
 
-  @RequestMapping(path = Array("/camel/activemq"), method = Array(RequestMethod.GET))
+  @ApiImplicitParams(value = Array(
+    new ApiImplicitParam(name = "name", value = "User's name", required = false, dataType = "string", paramType = "query", defaultValue = "World")
+  ))
+  @ApiResponses(value = Array(
+    new ApiResponse(code = 200, message = "Success", response = classOf[Greeting]),
+    new ApiResponse(code = 401, message = "Unauthorized"),
+    new ApiResponse(code = 403, message = "Forbidden"),
+    new ApiResponse(code = 404, message = "Not Found"),
+    new ApiResponse(code = 500, message = "Failure")
+  ))
+  @ApiOperation(value = "getCamelActiveMqGreeting", nickname = "getCamelActiveMqGreeting")
+  @RequestMapping(path = Array("/camel/activemq"), method = Array(RequestMethod.GET), produces = Array(MediaType.APPLICATION_JSON_VALUE))
   def camelActiveMQ(@RequestParam(value = "name", defaultValue = "World") name: String): Greeting =
     producerTemplate.requestBody("activemq:helloworld", name) match {
       case msg: String ⇒ Greeting(msg)
