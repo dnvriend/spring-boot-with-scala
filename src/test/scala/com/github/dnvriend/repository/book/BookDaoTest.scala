@@ -14,13 +14,24 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend.routes
+package com.github.dnvriend.repository.book
 
-import org.apache.camel.scala.dsl.builder.RouteBuilder
-import org.springframework.stereotype.Component
+import com.github.dnvriend.SpringConfiguration
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.ContextConfiguration
 
-@Component
-class HelloWorldRoute extends RouteBuilder {
-  "direct:helloworld" routeId "helloworld-direct" transform (ex ⇒ "Hello " + ex.in) log "HelloWorld" to "log:com.github.dnvriend?showAll=true"
-  "activemq:queue:helloworld" routeId "helloworld-activemq" transform (ex ⇒ "Hello " + ex.in) log "HelloWorld" to "log:com.github.dnvriend?showAll=true"
+@ContextConfiguration(classes = Array[Class[_]](classOf[SpringConfiguration]))
+class BookDaoTest extends TestSpec {
+
+  @Autowired
+  val dao: BookDao = null
+
+  it should "save" in {
+    dao.save(Book("", "")).toTry should be a 'success
+  }
+
+  it should "find one" in {
+    val id = dao.save(Book("", "")).futureValue.id
+    dao.findOne(id).futureValue should not be 'empty
+  }
 }

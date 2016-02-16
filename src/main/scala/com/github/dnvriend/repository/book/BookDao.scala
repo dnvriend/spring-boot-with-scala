@@ -16,20 +16,29 @@
 
 package com.github.dnvriend.repository.book
 
-import com.github.scalaspring.scalatest.TestContextManagement
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{ BeforeAndAfterEach, FlatSpec, Matchers }
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.util.Try
 
-trait TestSpec extends FlatSpec with Matchers with ScalaFutures with TestContextManagement with BeforeAndAfterEach {
+trait BookDao {
+  def save(book: Book): Future[Book]
+  def findOne(id: Long): Future[Option[Book]]
+}
 
-  implicit class PimpedByteArray(self: Array[Byte]) {
-    def getString: String = new String(self)
-  }
+@Component
+class SpringBookDao() extends BookDao {
 
-  implicit class PimpedFuture[T](self: Future[T]) {
-    def toTry: Try[T] = Try(self.futureValue)
-  }
+  @Autowired
+  val repo: BookRepository = null
+
+  // can use the repository in a semi-non-blocking way,
+  // but we are still implementing methods.. #fail
+
+  override def save(book: Book): Future[Book] =
+    Future(repo.save(Book(book.reader, book.isbn)))
+
+  override def findOne(id: Long): Future[Option[Book]] =
+    Future(Option(repo.findOne(id)))
 }
