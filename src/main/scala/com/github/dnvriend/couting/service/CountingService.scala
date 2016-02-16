@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend
+package com.github.dnvriend.couting.service
 
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.stereotype.Service
 
-@SpringBootApplication
-class SpringConfiguration
+trait CountingService {
+  def increment(count: Int): Int
+}
 
-object Launch extends App {
-  SpringApplication.run(classOf[SpringConfiguration], args: _*) // bootstrap the application
+@Service
+class CountingServiceImpl extends CountingService {
+  def increment(count: Int): Int = count + 1
 }

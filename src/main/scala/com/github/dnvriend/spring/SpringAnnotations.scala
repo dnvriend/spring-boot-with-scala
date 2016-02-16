@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend
+package com.github.dnvriend.spring
 
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
+import scala.annotation.meta.field
 
-@SpringBootApplication
-class SpringConfiguration
-
-object Launch extends App {
-  SpringApplication.run(classOf[SpringConfiguration], args: _*) // bootstrap the application
+object SpringAnnotations {
+  type Autowired = org.springframework.beans.factory.annotation.Autowired @field
 }

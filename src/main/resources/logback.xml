@@ -11,8 +11,9 @@
     </appender>
 
     <logger name="org.github.dnvriend" level="debug"/>
+    <logger name="org.springframeworkd" level="warn"/>
 
-    <root level="warn">
+    <root level="INFO">
         <appender-ref ref="console"/>
     </root>
 

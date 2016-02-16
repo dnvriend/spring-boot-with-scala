@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend
+package com.github.dnvriend.akka
 
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
+import akka.actor.{Extension, ExtendedActorSystem, ExtensionIdProvider, ExtensionId}
+import org.springframework.context.ApplicationContext
 
-@SpringBootApplication
-class SpringConfiguration
+object SpringExtension extends ExtensionId[SpringExtensionImpl] with ExtensionIdProvider {
+  override def createExtension(system: ExtendedActorSystem): SpringExtensionImpl =
+    new SpringExtensionImpl(system)
 
-object Launch extends App {
-  SpringApplication.run(classOf[SpringConfiguration], args: _*) // bootstrap the application
+  override def lookup(): ExtensionId[_ <: Extension] = SpringExtension
+}
+
+class SpringExtensionImpl(system: ExtendedActorSystem) extends Extension {
+  var applicationContext: Option[ApplicationContext] = None
 }

@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.dnvriend
+package com.github.dnvriend.akka
 
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
+import akka.actor.ActorSystem
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationContext
+import org.springframework.context.annotation.{ Bean, Configuration }
 
-@SpringBootApplication
-class SpringConfiguration
+@Configuration
+class AkkaConfig {
+  @Autowired
+  val applicationContext: ApplicationContext = null
 
-object Launch extends App {
-  SpringApplication.run(classOf[SpringConfiguration], args: _*) // bootstrap the application
+  @Bean
+  def actorSystem: ActorSystem = {
+    val system = ActorSystem()
+    SpringExtension(system).applicationContext = Option(applicationContext)
+    system
+  }
 }

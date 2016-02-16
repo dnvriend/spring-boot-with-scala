@@ -9,9 +9,12 @@ scalaVersion := "2.11.7"
 resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/maven-releases/"
 
 libraryDependencies ++= {
+  val akkaVersion = "2.4.2-RC3"
   val springBootVersion = "1.3.2.RELEASE"
   val camelVersion = "2.16.2"
   Seq(
+    "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+    "com.typesafe.akka" %% "akka-stream" % akkaVersion,
     "org.scala-lang.modules" % "scala-java8-compat_2.11" % "0.7.0",
     "ch.qos.logback" % "logback-classic" % "1.1.2",
     "org.apache.camel" % "camel-spring-boot" % camelVersion,
@@ -26,6 +29,8 @@ libraryDependencies ++= {
     "org.springframework.data" % "spring-data-rest-hal-browser" % "2.4.2.RELEASE",
     "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
     "com.h2database" % "h2" % "1.4.191",
+    "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
+    "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
     "com.github.scalaspring" %% "scalatest-spring" % "0.2.1" % Test,
     "org.springframework.boot" % "spring-boot-starter-test" % springBootVersion % Test,
     "org.scalatest" %% "scalatest" % "2.2.4" % Test
