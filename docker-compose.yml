@@ -1,0 +1,15 @@
+postgres:
+  image: postgres:latest
+  container_name: postgres
+  environment:
+    - "TZ=Europe/Amsterdam"
+    - "POSTGRES_USER=docker"
+    - "POSTGRES_PASSWORD=docker"
+  ports:
+    - "5432:5432"  # credentials (docker:docker)
+
+activemq:
+  image: rmohr/activemq:5.10.0
+  ports:
+    - "61616:61616" # ActiveMQ:61616 => "admin":"adminactivemq"
+    - "8161:8161" # ActiveMQWeb:8161 => "admin":"admin"
