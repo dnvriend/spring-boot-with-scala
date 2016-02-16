@@ -33,7 +33,7 @@ class BookRepositoryTest extends TestSpec {
 
   it should "save a book" in {
     val book = Book("foo", "bar")
-    val id = repo.save(book).bookId
+    val id = repo.save(book).id
     repo.findOne(id) shouldBe book
   }
 
@@ -48,8 +48,8 @@ class BookRepositoryTest extends TestSpec {
     val xy = (1 to 20).map(i ⇒ Book("bar", i.toString))
     repo.save(xs ++ xy)
     repo.count() shouldBe 30
-    repo.findByReader("foo").size shouldBe 10
-    repo.findByReader("bar").size shouldBe 20
+    repo.findByReaderIgnoreCase("foo", pageRequest).size shouldBe 10
+    repo.findByReaderIgnoreCase("bar", pageRequest).size shouldBe 20
   }
 
   override protected def beforeEach(): Unit = {

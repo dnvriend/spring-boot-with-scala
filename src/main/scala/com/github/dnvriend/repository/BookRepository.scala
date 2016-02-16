@@ -16,23 +16,23 @@
 
 package com.github.dnvriend.repository
 
-import javax.persistence.{ Entity, GeneratedValue, GenerationType, Id }
+import javax.persistence.{ Entity, GenerationType }
 
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.query.Param
 
 import scala.beans.BeanProperty
 
 @Entity
-case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) {
+case class Book(
+    @BeanProperty reader: String,
+    @BeanProperty isbn: String,
+    @ScalaJpaAnnotations.Id @ScalaJpaAnnotations.GeneratedValue(strategy = GenerationType.AUTO)@BeanProperty id: Long = 0L) {
   // default constructor for JPA
   def this() {
-    this(null, null)
+    this(null, null, 0L)
   }
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty
-  val bookId: Long = 0L
 }
 
 /**
@@ -40,6 +40,10 @@ case class Book(@BeanProperty reader: String, @BeanProperty isbn: String) {
  * so much for free, so for some use cases, this could be great!
  */
 trait BookRepository extends JpaRepository[Book, java.lang.Long] {
-  def findByReader(reader: String): java.util.List[Book]
+  type Books = java.util.List[Book]
+
+  def findByReaderIgnoreCase(@Param("reader") reader: String, pageable: Pageable): Books
+
+  def findByIsbnIgnoreCase(@Param("isbn") isbn: String, pageable: Pageable): Books
 }
 

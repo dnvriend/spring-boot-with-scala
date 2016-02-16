@@ -17,7 +17,7 @@
 package com.github.dnvriend.repository.book
 
 import com.github.dnvriend.SpringConfiguration
-import com.github.dnvriend.repository.{ Person, PersonRepository }
+import com.github.dnvriend.repository.{ Address, Person, PersonRepository }
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import scala.collection.JavaConversions._
@@ -28,10 +28,10 @@ class PersonRepositoryTest extends TestSpec {
   @Autowired
   var repo: PersonRepository = null
 
-  val person = Person("foo", "bar", dateFromString("1980-01-01"), married = false)
+  val person = Person("foo", "bar", dateFromString("1980-01-01"), Address("1000AA", "1"))
 
   def pfPerson: PartialFunction[Any, _] = {
-    case Person("foo", "bar", _, _) ⇒
+    case Person("foo", "bar", _, _, _) ⇒
   }
 
   it should "findByFirstNameIgnoreCase" in {

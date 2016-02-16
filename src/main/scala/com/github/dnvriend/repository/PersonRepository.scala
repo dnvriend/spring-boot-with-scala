@@ -21,26 +21,53 @@ import javax.persistence._
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.query.Param
+import org.springframework.data.rest.core.annotation.{ RepositoryRestResource, RestResource }
 
 import scala.beans.BeanProperty
 
 @Entity
-case class Person(@BeanProperty firstName: String, @BeanProperty lastName: String, @BeanProperty @Temporal(value = TemporalType.DATE) birthDate: java.util.Date, @BeanProperty married: Boolean) {
+case class Person(
+    @BeanProperty firstName: String,
+    @BeanProperty lastName: String,
+    @ScalaJpaAnnotations.Temporal(value = TemporalType.DATE)@BeanProperty birthDate: java.util.Date,
+    @ScalaJpaAnnotations.OneToOne(fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL))@ScalaJpaAnnotations.JoinColumn(name = "PERSON_ID")@BeanProperty address: Address,
+    @ScalaJpaAnnotations.Id @ScalaJpaAnnotations.GeneratedValue(strategy = GenerationType.AUTO)@BeanProperty id: Long = 0L) {
   // default constructor for JPA
   def this() {
-    this(null, null, null, false)
+    this(null, null, null, null, 0L)
   }
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty
-  val personId: Long = 0L
 }
 
+@Entity
+case class Address(
+    @BeanProperty zipCode: String,
+    @BeanProperty houseNumber: String,
+    @ScalaJpaAnnotations.Id @ScalaJpaAnnotations.GeneratedValue(strategy = GenerationType.AUTO)@BeanProperty id: Long = 0L) {
+  // default constructor for JPA
+  def this() {
+    this(null, null, 0L)
+  }
+}
+
+@RepositoryRestResource(path = "people")
 trait PersonRepository extends JpaRepository[Person, java.lang.Long] {
-  def findByFirstNameIgnoreCase(@Param("firstName") firstName: String, pageable: Pageable): java.util.List[Person]
-  def findByLastNameIgnoreCase(@Param("lastName") lastName: String, pageable: Pageable): java.util.List[Person]
-  def findByFirstNameOrLastName(@Param(value = "firstName") firstName: String, @Param(value = "lastName") lastName: String, pageable: Pageable): java.util.List[Person]
-  def findByFirstNameOrLastNameIgnoreCase(@Param(value = "firstName") firstName: String, @Param(value = "lastName") lastName: String, pageable: Pageable): java.util.List[Person]
-  def findByBirthDate(@Param("birthDate") birthDate: java.util.Date, pageable: Pageable): java.util.List[Person]
+
+  type People = java.util.List[Person]
+
+  @RestResource(path = "names", rel = "names")
+  def findByFirstNameIgnoreCase(@Param("firstName") firstName: String, pageable: Pageable): People
+
+  def findByLastNameIgnoreCase(@Param("lastName") lastName: String, pageable: Pageable): People
+
+  def findByFirstNameOrLastName(@Param(value = "firstName") firstName: String, @Param(value = "lastName") lastName: String, pageable: Pageable): People
+
+  def findByFirstNameOrLastNameIgnoreCase(@Param(value = "firstName") firstName: String, @Param(value = "lastName") lastName: String, pageable: Pageable): People
+
+  def findByBirthDate(@Param("birthDate") birthDate: java.util.Date, pageable: Pageable): People
+
+  def findByAddressZipCode(@Param("zipCode") zipCode: String, pageable: Pageable): People
+
+  def findByAddressHouseNumber(@Param("houseNumber") houseNumber: String, pageable: Pageable): People
+
+  def findByAddressZipCodeAndAddressHouseNumber(@Param("zipCode") zipCode: String, @Param("houseNumber") houseNumber: String, pageable: Pageable): People
 }
