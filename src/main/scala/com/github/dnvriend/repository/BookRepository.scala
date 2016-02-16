@@ -16,7 +16,7 @@
 
 package com.github.dnvriend.repository
 
-import javax.persistence.{Entity, GenerationType}
+import javax.persistence.{ Entity, GenerationType }
 
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
