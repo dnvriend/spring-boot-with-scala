@@ -33,7 +33,7 @@ class BookRepositoryTest extends TestSpec {
 
   it should "save a book" in {
     val book = Book("foo", "bar")
-    val id = repo.save(book).bookId
+    val id = repo.save(book).id
     repo.findOne(id) shouldBe book
   }
 

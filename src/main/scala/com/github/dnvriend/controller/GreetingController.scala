@@ -16,7 +16,8 @@
 
 package com.github.dnvriend.controller
 
-import io.swagger.annotations.{ ApiOperation, ApiImplicitParams, ApiImplicitParam, ApiResponses, ApiResponse }
+import com.github.dnvriend.swagger.ScalaSwaggerAnnotations
+import io.swagger.annotations._
 import org.apache.camel.ProducerTemplate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.{ RequestMapping, RequestMethod, 
 
 import scala.beans.BeanProperty
 
-case class Greeting(@BeanProperty message: String)
+case class Greeting(@ScalaSwaggerAnnotations.ApiModelProperty(notes = "The name of the user", required = true)@BeanProperty message: String)
 
 @RestController
 @RequestMapping(path = Array("/api/greeting"))
