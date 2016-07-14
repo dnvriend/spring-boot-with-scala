@@ -1,12 +1,10 @@
-# spring-boot-hypermedia-web-service
+# spring-boot-hypermedia-web-service #
+[![License](http://img.shields.io/:license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 A small study project on how to use spring-boot-starter-hateos
 
 # TL;DR
 With [spring-boot](http://projects.spring.io/spring-boot/) you can create hypermedia driven REST services with ease.
-
-Service | Status | Description
-------- | ------ | -----------
-License | [![License](http://img.shields.io/:license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt) | Apache 2.0
 
 # Calling the web service
 Service | Verb | [httpie](https://github.com/jkbrzt/httpie) | Description
